@@ -1,0 +1,53 @@
+<div class="statistics-updates di-b w100 mb8">
+    <a href="/games/{{videoGame.id}}" class="fl-l di-ib mr8 image">
+        <img 
+            *ngIf="boxArtExists(videoGame.images)" 
+            src={{formatPicture(findBoxArtData(videoGame.images))}} 
+            alt=""
+            style="width: 60px; height: 60px;">
+
+        <img 
+            *ngIf="!boxArtExists(videoGame.images)" 
+            src="../../../assets/placeholder.jpeg" 
+            alt=""
+            style="width: 60px; height: 60px;">
+    </a>
+    <div class="data">
+        <a href="/games/{{videoGame.id}}">{{videoGame.name}}</a>
+        <div>
+            <span class="fn-grey2">{{recentReview.timestamp}}</span>
+        </div>
+    </div>
+    <div class="review-read">
+        <button 
+            class="btn btn-success btn-sm" 
+            style="background-color: #840428; border-color: #840428;"
+            (click)="openPopup()">Read Review
+        </button>
+    </div>
+</div>
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display':displayStyle}"
+style="backdrop-filter: blur(5px);">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 20%;">
+    <div class="modal-header">
+        <h4 class="modal-title">Review for {{videoGame.name}}</h4>
+    </div>
+    <div class="modal-body">
+        <p>{{recentReview.review}}</p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+        Cancel
+        </button>
+    </div>
+    </div>
+</div>
+</div>

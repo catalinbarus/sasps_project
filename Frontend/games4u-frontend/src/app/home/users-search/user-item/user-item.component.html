@@ -1,0 +1,33 @@
+<div class="container">
+	<div class="row ng-scope">
+		<div class="col-md-9 col-md-pull-3">
+			<section class="search-result-item">
+				<a *ngIf="user.profilePicture.convertedData" class="image-link" href="/profile/{{user.id}}"><img class="image" src={{formatPicture(user.profilePicture.convertedData)}}>
+				</a>
+
+                <a *ngIf="!user.profilePicture.convertedData" class="image-link" href="/profile/{{user.id}}"><img class="image" src="../../../../assets/placeholder.jpeg">
+				</a>
+				<div class="search-result-item-body" style="margin-top: -20%;">
+					<div class="row">
+						<div class="col-sm-9">
+							<h4 class="search-result-item-heading"><a href="/profile/{{user.id}}">{{user.username}}</a></h4>
+							<p class="info">{{user.email}}</p>
+						</div>
+						<div class="col-sm-3 text-align-center">
+							<!-- <p class="value3 mt-sm">Score: {{videoGame.averageScore}}</p>
+							<p class="fs-mini text-muted">{{videoGame.reviews.length}} reviews</p> -->
+							<a 
+                                class="btn btn-primary btn-info btn-sm" 
+                                href="/profile/{{user.id}}"
+                                style="background-color: #840428; border-color: #840428; color: white;">Go to profile</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+    <br>
+</div>
+<br>
+<br>
+<br>

@@ -1,0 +1,49 @@
+<form (ngSubmit)="onSubmit()" class="d-flex">
+    <div class="input-group input-group-sm mb-3 justify-content-start" style="width: 50%; margin-left: 0.25%;">
+        <input 
+            type="text" 
+            class="form-control" 
+            aria-label="Small"
+            aria-describedby="inputGroup-sizing-sm"
+            placeholder="Search..."
+            [(ngModel)]="gameName"
+            [ngModelOptions]="{standalone: true}">
+        
+    </div>
+    <input
+  
+        type="image"
+        class="justify-content-end"
+        style="margin-right: 5px; margin-left: 1%; height: 1%;"
+        src="../../../../assets/search.png"
+        width="30px"
+        height="30px">    
+  </form>
+  
+  
+  <br>
+  
+  <div class="row">
+      <div class="col-xs-12 list-group">
+        <app-board-admin-images-item
+         *ngFor="let videoGameItem of videoGames | paginate: {
+          itemsPerPage: pageSize,
+          currentPage: page,
+          totalItems: count
+      }"
+         [videoGame]="videoGameItem"
+         style="width: 70%;"
+        ></app-board-admin-images-item>
+      </div>
+  </div>
+  
+  <br>
+  
+  <div style="margin-left: 20%; width: max-content;">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      [responsive]="true"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </div>

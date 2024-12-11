@@ -1,0 +1,189 @@
+<div *ngIf="videoGame" style="margin-top: 100px; position: absolute; margin-right: 80px;">
+    <div id="contentWrapper">
+        <div>
+            <div class="h4 edit-info">
+                <div class="h4-title">
+                    <h4 class="title-name h4_bold_none" style="margin-left: 15px;">
+                        <strong>{{ videoGame.name }}</strong>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <table border="0" [cellPadding]="0" [cellSpacing]="0" style="width: 100%; border-bottom: #e5e5e5 1px solid;">
+                <tbody>
+                    <tr>
+                        <td class="borderClass" width="305" style="border-width: 0 1px 0 1px;">
+                            <div style="width: 225px">
+                                <div style="text-align: center;">
+                                    <img 
+                                        class="lazyloaded" 
+                                        src={{formatPicture(findBoxArtData(videoGame.images))}} 
+                                        alt=""
+                                        style="width: 295px;">
+                                </div>
+                                <br>
+                                <div class="stats-block po-r clearfix" style="width: 80%; margin-left: 55px;">
+                                    <div 
+                                        class="fl-l score" 
+                                        data-title="score" 
+                                        [attr.data-reception]="formatScoreReception(videoGame.averageScore)"
+                                        style="margin-top: -7px;">
+                                        <div>{{ videoGame.averageScore }}</div>
+                                    </div>
+                                    <div 
+                                        class="fl-l review" 
+                                        data-title="reviews" 
+                                        style="margin-top: -7px; margin-left: 35px;">
+                                        <div>{{ videoGame.reviews.length }}</div>
+                                    </div>
+                                </div>
+                                <h2 class="mt8">Edit status</h2>
+                                <hr style="width: 300px">
+                                <div class="addtolist-block" style="display: block;">
+                                    <table border="0" [cellPadding]="0" [cellSpacing]="0" style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="spaceit" style="font-size: 15px;">Status:</td>
+                                                <td class="spaceit">
+                                                    <select name="myinfo_status" id="" class="inputtext" [(ngModel)]="givenStatus">
+                                                        <option value="0">Select</option>
+                                                        <option value="1">Currently Playing</option>
+                                                        <option value="2">Finished</option>
+                                                        <option value="3">Dropped</option>
+                                                        <option value="4">Plan to Play</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="spaceit" style="font-size: 15px;">Your score:</td>
+                                                <td class="spaceit">
+                                                    <select
+                                                        *ngIf="givenScore != 0" 
+                                                        name="myinfo_score" 
+                                                        class="inputtext" 
+                                                        [(ngModel)]="givenScore">
+                                                        <option 
+                                                            *ngFor="let score of scores; let i = index" 
+                                                            [value]="(10-(i-1))">
+                                                            {{score}}
+                                                        </option>  
+                                                    </select>
+                                                    <select
+                                                        *ngIf="givenScore == 0" 
+                                                        name="myinfo_score" 
+                                                        class="inputtext" 
+                                                        [(ngModel)]="givenScore">
+                                                        <option value="0" selected="selected">Select</option>
+                                                        <option 
+                                                            *ngFor="let score of scores; let i = index" 
+                                                            [value]="(10-(i-1))">
+                                                            {{score}}
+                                                        </option>  
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <br>
+                                            <tr>
+                                                <td *ngIf="gameSet">
+                                                    <input type="button" name="myinfo_submit" value="Update score" class="inputButton btn-middleflat" 
+                                                    style="background-color: #840428;" (click)="updateGameScore()">
+                                                </td>
+                                                <td *ngIf="!gameSet">
+                                                    <input type="button" name="myinfo_submit" value="Set score" class="inputButton btn-middleflat" 
+                                                    style="background-color: #840428;" (click)="setGameScore()">
+                                                </td>
+                                                <td *ngIf="isGameInList">
+                                                    <input type="button" name="myinfo_submit" value="Update my list" class="inputButton btn-middleflat" 
+                                                    style="background-color: #840428;" (click)="updateGameStatus()">
+                                                </td>
+                                                <td *ngIf="!isGameInList">
+                                                    <input type="button" name="myinfo_submit" value="Add to my list" class="inputButton btn-middleflat" 
+                                                    style="background-color: #840428;" (click)="setGameStatus()">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h2>Information</h2>
+                                <hr style="width: 300px">
+                                <div class="spaceit_pad">
+                                    <span class="dark_text">Developer:</span>
+                                    {{ videoGame.gameDeveloper.name }}
+                                </div>
+                                <div class="spaceit_pad">
+                                    <span class="dark_text">Publisher:</span>
+                                    {{ videoGame.gamePublisher.name }}
+                                </div>
+                                <div class="spaceit_pad">
+                                    <span class="dark_text">Genre:</span>
+                                    {{ videoGame.genre.name }}
+                                </div>
+                                <div class="spaceit_pad">
+                                    <span class="dark_text">Release date:</span>
+                                    {{ videoGame.releaseDate }}
+                                </div>
+                                <div class="spaceit_pad">
+                                    <span class="dark_text">Age rating:</span>
+                                    {{ videoGame.rating }}
+                                </div>
+                                <div class="clearfix mauto mt16" style="margin-bottom: 600px;"></div>
+                            </div>
+                        </td>
+                        <td style="border-right: #e5e5e5 1px solid;">
+                            <div style="margin-top: -20%;">
+                                <div *ngIf="coverPictures.length > 0" id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="margin-top: -80px;width: 800px; margin-left: 50px; margin-bottom: 30px;">
+                                    <div class="carousel-inner">
+                                      <div 
+                                        class="carousel-item active" 
+                                        *ngFor="let coverPicture of coverPictures; let i = index" [class.active]="i === 0">
+                                        <img src={{formatPicture(coverPicture.convertedData)}}  class="d-block" alt="..." style="width: 800px; height: 500px;">
+                                      </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="z-index: 0;">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="z-index: 0;">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <div *ngIf="coverPictures.length == 0" style="margin-top: -65%;"></div>
+                                <div id="horiznav_nav" style="margin: -10px 0 10px 0;">
+                                    <ul style="margin-right: 0; padding-right: 0;">
+                                        <li *ngFor="let action of actions" (click)="itemSelected(action)">
+                                            <a 
+                                                *ngIf="action.routeParam != 'pictures'"
+                                                [ngClass]="action == selectedAction ? 'horiznav_active' : 'lol'"
+                                                [routerLink]="[action.routeParam]">
+                                                {{action.name}}
+                                            </a>
+                                            <a 
+                                                *ngIf="action.routeParam == 'pictures'"
+                                                [ngClass]="action == selectedAction ? 'horiznav_active' : 'lol'"
+                                                (click)="jumpToTop()"
+                                                style="cursor: pointer;">
+                                                {{action.name}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <router-outlet></router-outlet>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer id="footer" class="d-flex row bg-light text-center text-lg-start" style="width: 113.2%; margin-left: -7%; margin-top: 15px;">
+		<!-- Copyright -->
+		<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+			© 2023 Copyright:
+			<a class="text-dark" href="http://localhost:8081//">Games4U</a>
+		</div>
+		<!-- Copyright -->
+	</footer>
+</div>

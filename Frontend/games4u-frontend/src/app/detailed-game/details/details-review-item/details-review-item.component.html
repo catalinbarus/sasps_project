@@ -1,0 +1,29 @@
+<div *ngIf="reviewer" class="review-element">
+    <div class="thumbbody mt8">
+        <div class="thumb">
+            <a href="">
+                <img 
+                    *ngIf="reviewer.profilePicture.convertedData != null" 
+                    src={{formatPicture(reviewer.profilePicture.convertedData)}} 
+                    alt=""
+                    width="50px"
+                    class="lazyloaded">
+
+                <img 
+                    *ngIf="reviewer.profilePicture.convertedData == null" 
+                    src="../../../../assets/profile.png" 
+                    alt=""
+                    width="50px"
+                    class="lazyloaded">
+            </a>
+        </div>
+        <div class="body">
+            <div class="update_at">{{ formatDate(review.timestamp) }}</div>
+            <div class="username">
+                <a href="">{{ reviewer.username }}</a>
+            </div>
+            <div class="text">{{ review.review }}</div>
+
+        </div>
+    </div>
+</div>

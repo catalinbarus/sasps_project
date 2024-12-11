@@ -1,0 +1,87 @@
+.list-block {
+    margin-top: 16px;
+    min-height: 600px;
+    padding: 0;
+}
+
+.list-unit {
+    display: block;
+    margin: 0 auto;
+    width: 1024px;
+}
+
+.list-unit .list-status-title {
+    position: relative;
+    display: table;
+    width: 1024px;
+    height: 38px;
+}
+
+.list-unit .list-status-title .text {
+    display: table-cell;
+    width: 1024px;
+    height: 38px;
+    font-size: 2.0em;
+    font-weight: bold;
+    font-family: 'Helvetica neue', Helvetica, "lucida grande", tahoma, verdana, arial, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.list-table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.list-table .list-table-header .header-title.number {
+    width: 30px;
+}
+
+.list-table .list-table-header .header-title {
+    display: table-cell;
+    height: 36px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.list-table .list-table-header .header-title.image {
+    width: 66px;
+}
+
+.list-table .list-table-header .header-title.title {
+    padding-left: 8px;
+    text-align: left;
+}
+
+.list-table .list-table-header .header-title.score {
+    width: 60px;
+}
+
+.list-table .list-table-header .header-title.genre {
+    width: 60px;
+}
+
+.list-table .list-table-header .header-title.developer {
+    width: 90px;
+}
+
+.list-table .list-table-header .header-title.publisher {
+    width: 90px;
+}
+
+.list-table .list-table-header .header-title.rated {
+    width: 70px;
+}
