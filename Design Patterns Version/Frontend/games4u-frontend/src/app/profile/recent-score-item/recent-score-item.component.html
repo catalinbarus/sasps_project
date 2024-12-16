@@ -1,0 +1,21 @@
+<div class="statistics-updates di-b w100 mb8">
+    <a href="/games/{{videoGame.id}}" class="fl-l di-ib mr8 image">
+        <img 
+            *ngIf="boxArtExists(videoGame.images)" 
+            src={{formatPicture(findBoxArtData(videoGame.images))}} 
+            alt=""
+            style="width: 60px; height: 60px;">
+
+        <img 
+            *ngIf="!boxArtExists(videoGame.images)" 
+            src="../../../assets/placeholder.jpeg" 
+            alt=""
+            style="width: 60px; height: 60px;">
+    </a>
+    <div class="data">
+        <a href="/games/{{videoGame.id}}">{{videoGame.name}}</a>
+        <div class="fn-grey2" style="margin-bottom: 3.5%;">
+            Scored {{score.score}}
+        </div>
+    </div>
+</div>

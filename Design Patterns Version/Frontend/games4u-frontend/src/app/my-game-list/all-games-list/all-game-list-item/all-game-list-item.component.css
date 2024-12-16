@@ -1,0 +1,40 @@
+tbody {
+    
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.list-table {
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: #EBEBEB 1px solid;
+}
+
+.list-table .data {
+    display: table-cell;
+    padding: 4px 0;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: #EBEBEB 1px solid;
+}
+
+td {
+    line-height: 1.5em;
+}
+
+.list-table .list-table-data .data.title {
+    padding-left: 8px;
+    text-align: left;
+}
+
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+a:active { text-decoration: none; }

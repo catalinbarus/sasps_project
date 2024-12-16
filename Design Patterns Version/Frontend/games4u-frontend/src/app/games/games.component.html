@@ -1,0 +1,92 @@
+<div id="games4u">
+    <table *ngIf="videoGames.length > 0" border="0" [cellPadding]="0" [cellSpacing]="0" style="border-collapse: collapse; margin-top: 80px; margin-bottom: 13%;" class="top-ranking-table">
+        <thead class="table-header">
+            <th>Rank</th>
+            <th>Title</th>
+            <th>Score</th>
+            <th>Your Score</th>
+            <th>Status</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let videoGame of videoGames | paginate: {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: count
+            }; let i=index" class="ranking-list">
+                <td class="ac">
+                    <span class="lightLink top-game-rank-text">{{ (i + 1) + (pageSize * (page - 1)) }}</span>
+                </td>
+                <td class="title al va-t word-break">
+                    <a *ngIf="videoGame.boxart.convertedData != null" href="/games/{{videoGame.id}}" class="fl-l ml12 mr8">
+                        <img src={{formatPicture(videoGame.boxart.convertedData)}} alt="" width="100">
+                    </a>
+
+                    <div *ngIf="videoGame.boxart.convertedData == null" class="fl-l ml12 mr8">
+                        <img src="../../assets/placeholder.jpeg" alt="" width="100">
+
+                    </div>
+                    
+                    
+                    <div class="detail">
+                        <div class="di-ib">
+                            <h3 class="fl-l fs14 fw-b game_ranking_h3">
+                                <a href="/games/{{videoGame.id}}">{{ videoGame.name }}</a>
+                            </h3>
+                        </div>
+                        <br>
+                        <div class="information di-ib mt4">
+                            {{videoGame.gameDeveloper.name}}
+                            <br>
+                            {{videoGame.gamePublisher.name}}
+                            <br>
+                            {{videoGame.reviews.length}} {{(videoGame.reviews.length > 2 || videoGame.reviews.length == 0) ? "Reviews" : "Review"}}
+                        </div>
+                    </div>   
+                </td>
+                <td class="ac fs14">{{ videoGame.averageScore }}</td>
+                <td class="ac fs14">
+                    <div *ngIf="this.isLoggedIn == false">
+                        N/A
+                    </div>
+                    <div *ngIf="this.isLoggedIn == true">
+                       {{getPersonalScore(videoGame)}}
+                    </div>
+                </td>
+                <td class="ac fs14">
+                    <div *ngIf="this.isLoggedIn == false">
+                        N/A
+                    </div>
+                    <div *ngIf="this.isLoggedIn == true">
+                        {{getPersonalGameStatus(videoGame)}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    
+    </table>
+    <div *ngIf="videoGames.length == 0" style="margin-top: 80px;">
+        There is no data to display
+    </div>
+</div>
+
+<div style="margin-left: 40%;">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      [responsive]="true"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+</div>
+
+<div *ngIf="videoGames.length > 0">
+    <footer id="footer" class="d-flex row bg-light text-center text-lg-start" style="width: 117.5%; margin-left: -10%; margin-top: 15px;">
+		<!-- Copyright -->
+		<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+			© 2023 Copyright:
+			<a class="text-dark" href="http://localhost:8081//">Games4U</a>
+		</div>
+		<!-- Copyright -->
+    </footer>
+</div>
+
+

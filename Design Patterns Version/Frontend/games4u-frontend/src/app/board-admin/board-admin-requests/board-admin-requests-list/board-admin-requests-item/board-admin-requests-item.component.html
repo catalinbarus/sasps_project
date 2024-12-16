@@ -1,0 +1,107 @@
+<a
+  style="cursor: pointer; margin-bottom: 2px; margin-left: 3%; width: 130%;"
+  class="list-group-item"
+  (mouseover)="showButtons = true" (mouseleave)="showButtons = false"
+>
+<div class="d-flex">
+  <span class="">
+    <img
+      *ngIf="userOfRequest.profilePicture.convertedData"
+      [src]="formatPicture(userOfRequest.profilePicture.convertedData)"
+      [alt]="userOfRequest.profilePicture.name"
+      class="img-responsive"
+      style="height: 60px; width: 60px; margin-left: 10%;"
+    />
+    <img 
+        *ngIf="userOfRequest.profilePicture.convertedData == null"
+        src="../../assets/placeholder.jpeg" 
+        alt="" 
+        style="height: 60px; width: 60px; margin-left: 10%;">
+  </span>
+  <div class="flex-grow-1" style="margin-left: 3%;">
+    <h4 class="list-group-item-heading">
+      {{ request.gameName }}
+    </h4>
+    <p class="list-group-item-text">
+      Issued by: <b>{{userOfRequest.username}}</b>
+    </p>
+    <button 
+        class="btn btn-primary" 
+        type="button"
+        style="margin-right: 5px; background-color: #840428; border-color: #840428;"
+        (click)="openPopup()">
+        More info
+    </button>
+  </div>
+  
+  <div *ngIf="showButtons == true" style="margin-top: 1.5%; margin-right: 2%;">
+    <img src="../../../../../assets/approve.png" alt=""  width="50" (click)="openPopupApprove()">
+  </div>
+  
+  <div *ngIf="showButtons == false" style="margin-top: 1.5%; margin-right: 2%;">
+    <img src="../../../../../assets/white.jpeg" alt="" width="50">
+  </div>
+</div>
+</a>
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display':displayStyle}"
+style="backdrop-filter: blur(5px);">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 20%;">
+    <div class="modal-header">
+        <h4 class="modal-title">Request for game: {{request.gameName}}</h4>
+    </div>
+    <div class="modal-body">
+        <p> <b>Reference link: </b> <a href={{request.link}} target="_blank">here</a></p>
+        <p>
+            <b>Details:</b>
+            <br>
+            {{request.details}}
+        </p>
+        <p>
+            <b>Issued on:</b> {{request.createdAt}}
+        </p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+        Cancel
+        </button>
+    </div>
+    </div>
+</div>
+</div>
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display':displayStyleApprove}"
+style="backdrop-filter: blur(5px);">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 20%;">
+    <div class="modal-header">
+        <h4 class="modal-title">Approve game request?</h4>
+    </div>
+    <div class="modal-body">
+        <p>By doing this you aknowledge that the requested game was added to the database.</p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopupApprove()">
+        No
+        </button>
+        <button type="button" class="btn btn-success" 
+                (click)="onRequestApprove()">
+        Yes
+        </button>
+    </div>
+    </div>
+</div>
+</div>

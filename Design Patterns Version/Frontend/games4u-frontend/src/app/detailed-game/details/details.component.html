@@ -1,0 +1,16 @@
+<div>
+    <h2>Description</h2>
+</div>
+<p style="font-size: 14px;">{{ videoGame.description }}</p>
+<br>
+<div>
+    <span class="floatRightHeader">
+        <a href="">More reviews</a>
+    </span>
+    <h2>Reviews</h2>
+    <app-details-review-item 
+        *ngFor="let review of gameReviews"
+        [review]="review">
+    </app-details-review-item>
+</div>
+<div style="margin-bottom: 350px;"></div>
