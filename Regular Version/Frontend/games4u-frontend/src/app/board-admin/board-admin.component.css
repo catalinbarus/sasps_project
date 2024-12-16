@@ -1,0 +1,15 @@
+.vl {
+    border-left: 3px solid black;
+    height: 1000px;
+    margin-top: -60px;
+    margin-left: 100px;
+ }
+
+#games4u {
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: left;
+    display: flex;
+}

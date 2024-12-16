@@ -1,0 +1,14 @@
+<div style="margin-left: -100%;">
+    <button 
+        class="btn btn-primary" 
+        style="background-color: #840428; border-color: #840428;"
+        (click)="onNewGame()">Add game
+    </button>
+    <div style="margin-top: 3%;">
+        <app-board-admin-games-list
+        [page]="page"
+        [pageSize]="pageSize"
+        [count]="count"
+        ></app-board-admin-games-list>
+    </div>
+</div>

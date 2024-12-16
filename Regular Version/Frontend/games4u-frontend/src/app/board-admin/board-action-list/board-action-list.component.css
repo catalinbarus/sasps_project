@@ -1,0 +1,8 @@
+a:visited {
+    color: #840428;
+}
+
+.my_scroll_div{
+    overflow-y: auto;
+    max-height: 87%;
+}

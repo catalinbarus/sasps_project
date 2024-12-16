@@ -1,0 +1,194 @@
+<div id="profileWrapper" style="margin-top: 80px; margin-left: 1.5%;" *ngIf="userOfProfile">
+    <div id="contentWrapper">
+        <div class="h1">
+            <div class="dropdown">
+                <a 
+                    *ngIf="isLoggedUserOnTheirProfile"
+                    href="#" 
+                    class="nav-link dropdown-toggle header-right mt4 mr0" 
+                    style="font-size: 12px; color: white;"
+                    id="profileEditDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Settings
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="profileEditDropdown">
+                  <li><a class="dropdown-item" (click)="openPopup()">Edit Profile Picture</a></li>
+                </ul>
+            </div>
+            <a 
+                class="header-right mt4 mr0" 
+                style="font-size: 12px; color: white; cursor: pointer;"
+                (click)="openPopupAboutPage()">
+                About page
+            </a>
+            <span class="di-ib po-r">{{userOfProfile.username}}'s profile</span>
+        </div>
+        <div id="content">
+            <div class="content-container">
+                <div class="container-left">
+                    <div class="user-profile">
+                        <div class="user-image mb8">
+                            <img 
+                                *ngIf="userOfProfile.profilePicture.convertedData != null"
+                                src={{formatPicture(userOfProfile.profilePicture.convertedData)}} alt="">
+                            <img 
+                            *ngIf="userOfProfile.profilePicture.convertedData == null"
+                            src="../../assets/profile.png" alt="">
+                        </div>
+                        <ul class="user-status border-top pb8 mb4">
+                            <li>
+                                <span class="user-status-title di-ib fl-l fw-b">Role</span>
+                                <span class="user-status-data di-ib fl-r">{{userOfProfile.roles[0].name}}</span>
+                            </li>
+                            <br>
+                            <li>
+                                <span class="user-status-title di-ib fl-l fw-b">Email</span>
+                                <span class="user-status-data di-ib fl-r" style="font-size: 8pt;">{{userOfProfile.email}}</span>
+                            </li>
+                            <br>
+                            <li>
+                                <span class="user-status-title di-ib fl-l fw-b">Games in list</span>
+                                <span class="user-status-data di-ib fl-r">{{userOfProfile.myGameListEntries.length}}</span>
+                            </li>
+                        </ul>
+                        <br>
+                        <div class="user-button mb12">
+                            <a href="/gamelist/{{userOfProfile.id}}" class="btn-profile-submit fl-l">Game list</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-right">
+                    <div class="user-statistics mb24" id="statistics">
+                        <h2>Statistics</h2>
+                        <div class="user-statistics-stats mt16">
+                            <div class="stats">
+                                <h5>Game Stats</h5>
+                                <div class="stat-score di-t w100 pt8">
+                                    <div class="di-tc al pl8 fs12 fw-b">
+                                        <span class="fn-grey2 fw-n">Mean Score:</span>
+                                        {{formatNumber(meanScore)}}
+                                    </div>
+                                </div>
+                                <div class="stats-graph mt8" style="margin-left: 1.5%;">
+                                    <span class="graph playing" style="width: {{currentlyPlayingPixels+'px'}}"></span>
+                                    <span class="graph finished" style="width: {{finishedPixels+'px'}}"></span>
+                                    <span class="graph dropped" style="width: {{droppedPixels+'px'}}"></span>
+                                    <span class="graph plan_to_play" style="width: {{planToPlayPixels+'px'}}"></span>
+                                </div>
+                                <div class="mt12 ml8 mr8">
+                                    <ul class="stats-status fl-l">
+                                        <li class="mb12">
+                                            <a href="/gamelist/{{userOfProfile.id}}/currently_playing" class="di-ib fl-l lh10 circle playing">Playing</a>
+                                            <span class="di-ib fl-r lh10">{{currentlyPlayingGames}}</span>
+                                        </li>
+                                        <br>
+                                        <li class="mb12">
+                                            <a href="/gamelist/{{userOfProfile.id}}/finished" class="di-ib fl-l lh10 circle finished">Finished</a>
+                                            <span class="di-ib fl-r lh10">{{finishedGames}}</span>
+                                        </li>
+                                        <br>
+                                        <li class="mb12">
+                                            <a href="/gamelist/{{userOfProfile.id}}/dropped" class="di-ib fl-l lh10 circle dropped">Dropped</a>
+                                            <span class="di-ib fl-r lh10">{{droppedGames}}</span>
+                                        </li>
+                                        <br>
+                                        <li class="mb12">
+                                            <a href="/gamelist/{{userOfProfile.id}}/plan_to_play" class="di-ib fl-l lh10 circle plan_to_play">Plan To Play</a>
+                                            <span class="di-ib fl-r lh10">{{planToPlayGames}}</span>
+                                        </li>
+
+                                    </ul>
+
+
+                                </div>
+                            </div>
+                            <div class="updates">
+                                <h5 class="mb12">
+                                    Last Game Updates
+                                </h5>
+                                <app-recent-game-update-item
+                                *ngFor="let entry of gameUpdates"
+                                [myGameListEntry]="entry"
+                                [userId]="userId"
+                                ></app-recent-game-update-item>
+
+                            </div>
+                        </div>
+                        <div class="user-statistics-stats mt16">
+                            <div class="stats">
+                                <h5 class="mb12">
+                                    Recent Scores
+                                </h5>
+                                <app-recent-score-item
+                                *ngFor="let score of recentScores"
+                                [score]="score"
+                                [userId]="userId"></app-recent-score-item>
+
+                            </div>
+                            <div class="updates">
+                                <h5>Recent Reviews</h5>
+                                <app-recent-review-item
+                                *ngFor="let review of recentReviews.reviews"
+                                [recentReview]="review"></app-recent-review-item>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display':displayStyle}"
+style="backdrop-filter: blur(5px);">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 20%;">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit profile picture</h4>
+    </div>
+    <div class="modal-body">
+        <app-profile-picture-upload [userId]="userId"></app-profile-picture-upload>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+        Cancel
+        </button>
+    </div>
+    </div>
+</div>
+</div>
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display':displayStyleAboutPage}"
+style="backdrop-filter: blur(5px);">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 20%;">
+    <div class="modal-header">
+        <h4 class="modal-title">This is a profile page!</h4>
+    </div>
+    <div class="modal-body">
+        <p>
+            You can check out <b>{{userOfProfile.username}}</b>'s profile.
+        </p>
+        <p>
+            Here you will find the user's statistics and recent updates. Please contact us if you find any inappropriate behaviour in this page!
+        </p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopupAboutPage()">
+        Cancel
+        </button>
+    </div>
+    </div>
+</div>
+</div>

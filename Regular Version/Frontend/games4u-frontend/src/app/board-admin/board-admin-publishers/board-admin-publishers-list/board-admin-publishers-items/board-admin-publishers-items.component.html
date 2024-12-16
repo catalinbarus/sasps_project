@@ -1,0 +1,50 @@
+
+<a
+  style="cursor: pointer; margin-bottom: 2px; margin-left: 3%;"
+  class="list-group-item"
+>
+<div class="d-flex">
+  <div class="flex-grow-1" style="margin-left: 3%;">
+    <h4 class="list-group-item-heading">
+      {{ publisher.name }}
+    </h4>
+    <p class="list-group-item-text">
+      <b>Establish date:</b> {{ publisher.establishDate }}
+    </p>
+  </div>
+  <div style="margin-top: 1.5%;">
+    <img src="../../../../../assets/delete.png" alt="" (click)="openPopup()" width="50">
+  </div>
+</div>
+</a>
+
+<div
+class="modal"
+tabindex="-1"
+role="dialog"
+[ngStyle]="{'display':displayStyle}"
+style="backdrop-filter: blur(5px);">
+<div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 20%;">
+    <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to delete this publisher? "{{ publisher.name }}"</h4>
+    </div>
+    <div class="modal-body">
+        <p>Deleting a publisher is an action that may have consequences!</p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+        No
+        </button>
+        <button type="button" class="btn btn-success" 
+                (click)="onPublisherDelete()">
+        Yes
+        </button>
+    </div>
+    </div>
+</div>
+</div>
+
+

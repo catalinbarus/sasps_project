@@ -1,0 +1,156 @@
+#games4u {
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    width: 1060px;
+}
+
+.table-header th {
+    background-color: #840428;
+    border: #840428 0 solid;
+    border-left: #fff 1px solid;
+    color: #fff;
+    font-family: Avenir,lucida grande,tahoma,verdana,arial,sans-serif;
+    font-size: 12px;
+    padding: 4px 0;
+    text-align: center;
+    height: 30px;
+}
+
+.table-header th.rank {
+    width: 74px;
+}
+
+table {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+tr td {
+    border-left: #e5e5e5 1px solid;
+    border-right: #e5e5e5 1px solid;
+    border-bottom: #e5e5e5 1px solid;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+
+tr.ranking-list td {
+    background-color: #fff;
+    vertical-align: middle;
+}
+
+.top-ranking-table tr.ranking-list:nth-of-type(even) td {
+    background-color: #f8f8f8;
+}
+
+.ac {
+    text-align: center!important;
+}
+
+.lightLink, .page-common .lightLink:link, .page-common .lightLink:visited, .page-common .lightLink:active {
+    color: #888;
+}
+
+span {
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+.top-game-rank-text {
+    font-family: Avenir,lucida grande,tahoma,verdana,arial,sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.word-break {
+    word-break: break-word;
+    word-wrap: break-word;
+}
+.va-t {
+    vertical-align: top!important;
+}
+.al {
+    text-align: left!important;
+}
+
+.top-ranking-table tr td {
+    border-left: #e5e5e5 1px solid;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+a:visited {
+    color: #1c439b;
+    text-decoration: none;
+}
+.page-common .mr8 {
+    margin-right: 8px!important;
+}
+.page-common .ml12 {
+    margin-left: 12px!important;
+}
+
+.page-common .fl-l {
+    float: left!important;
+}
+
+.title .detail {
+    margin-left: 110px;
+    margin-top: -120px;
+}
+
+.page-common .di-ib {
+    display: inline-block!important;
+}
+
+.page-common .game_ranking_h3 {
+    margin: 0 auto;
+}
+.page-common .fw-b {
+    font-weight: 700!important;
+}
+.page-common .fs14 {
+    font-size: 14px!important;
+}
+
+.title .information {
+    color: #999;
+    font-size: 11px;
+    margin-top: -20px;
+}
+
+.page-common .mt4 {
+    margin-top: 4px!important;
+}
+
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+::ng-deep .ngx-pagination li.current {
+    background-color: #840428;
+}
+  
