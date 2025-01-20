@@ -1,14 +1,12 @@
 package com.backend.games4u.controllers;
 
-import com.backend.games4u.message.ImageResponseDto;
 import com.backend.games4u.message.ImageResponseMessage;
 import com.backend.games4u.message.UserImageResponseDto;
-import com.backend.games4u.models.ImageDB;
 import com.backend.games4u.models.User;
 import com.backend.games4u.models.UserImage;
 import com.backend.games4u.repository.UserImageRepository;
 import com.backend.games4u.repository.UserRepository;
-import com.backend.games4u.service.ImageStorageService;
+import com.backend.games4u.services.ImageStorageService;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -4,7 +4,9 @@ import com.backend.games4u.message.*;
 import com.backend.games4u.models.*;
 import com.backend.games4u.payload.response.MessageResponse;
 import com.backend.games4u.repository.*;
-import com.backend.games4u.service.ImageResponseService;
+import com.backend.games4u.services.ImageResponseService;
+import com.backend.games4u.services.VideoGameLightService;
+import com.backend.games4u.services.VideoGameService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,15 +36,6 @@ public class VideoGameController {
     ImageResponseService imageResponseService;
 
     @Autowired
-    ImageDBRepository imageDBRepository;
-
-    @Autowired
-    ScoreRepository scoreRepository;
-
-    @Autowired
-    ReviewRepository reviewRepository;
-
-    @Autowired
     GameDeveloperRepository gameDeveloperRepository;
 
     @Autowired
@@ -57,6 +50,12 @@ public class VideoGameController {
     @Autowired
     MyGameListEntryRepository myGameListEntryRepository;
 
+    @Autowired
+    private VideoGameService videoGameService;
+
+    @Autowired
+    private VideoGameLightService videoGameLightService;
+
     private Sort.Direction getSortDirection(String direction) {
         if (direction.equals("asc")) {
             return Sort.Direction.ASC;
@@ -67,130 +66,16 @@ public class VideoGameController {
         return Sort.Direction.ASC;
     }
 
-    @GetMapping("/games")
+    @GetMapping
     public ResponseEntity<PaginatedVideoGameResponseDto> getAllGames(
             @RequestParam(required = false) String gameName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size,
             @RequestParam(defaultValue = "averageScore,desc") String[] sort,
             @RequestParam(name = "user_id", required = false) Optional<Long> userId) {
-
         try {
-            List<Order> orders = new ArrayList<Order>();
-
-            if (sort[0].contains(",")) {
-
-                for (String sortOrder : sort) {
-                    String[] _sort = sortOrder.split(",");
-                    orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-                }
-            } else {
-                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-            }
-
-            List<VideoGame> videoGames = new ArrayList<VideoGame>();
-            List<VideoGameResponseDto> videGamesResponse = new ArrayList<>();
-
-            Pageable paging = PageRequest.of(page, size, Sort.by(orders).and(Sort.by("id")));
-            Page<VideoGame> pageGames;
-
-            if (gameName == null)
-                pageGames = videoGameRepository.findAll(paging);
-            else
-                pageGames = videoGameRepository.findVideoGameByNameContainsIgnoreCase(gameName, paging);
-
-            videoGames = pageGames.getContent();
-
-            if (videoGames.isEmpty()) {
-                PaginatedVideoGameResponseDto paginatedVideoGameResponseDto
-                        = new PaginatedVideoGameResponseDto(
-                        pageGames.getTotalElements(),
-                        pageGames.getTotalPages(),
-                        pageGames.getNumber(),
-                        videGamesResponse);
-
-                return new ResponseEntity<>(paginatedVideoGameResponseDto, HttpStatus.OK);
-            }
-
-            for (VideoGame game : videoGames) {
-
-                List<ImageResponseDto> photos =
-                        imageResponseService.getPhotosInTheProperResponse(game);
-
-                Set<ScoreResponseDto> scoreResponseDtos = new HashSet<>();
-
-                if (userId.isPresent()) {
-                    scoreResponseDtos =
-                            game.getScores()
-                                    .stream()
-                                    .filter(s -> s.getUser().getId() == userId.get())
-                                    .flatMap(s -> Stream.of(new ScoreResponseDto(s.getId(),
-                                            s.getScore(), s.getUser().getId(), s.getVideoGame().getId())))
-                                    .collect(Collectors.toSet());
-                } else {
-                    scoreResponseDtos =
-                            game.getScores()
-                                    .stream()
-                                    .flatMap(s -> Stream.of(new ScoreResponseDto(s.getId(),
-                                            s.getScore(), s.getUser().getId(), s.getVideoGame().getId())))
-                                    .collect(Collectors.toSet());
-                }
-
-
-                Set<ReviewResponseDto> reviewResponseDtos =
-                        game.getReviews()
-                                .stream()
-                                .flatMap(r -> Stream.of(
-                                        new ReviewResponseDto(
-                                                r.getId(),
-                                                r.getReview(),
-                                                r.getUser().getId(),
-                                                r.getVideoGame().getId(),
-                                                r.getCreatedAt())))
-                                .collect(Collectors.toSet());
-
-                Set<TrailerResponseDto> trailerResponseDtos =
-                        game.getTrailers()
-                                .stream()
-                                .flatMap(t -> Stream.of(
-                                        new TrailerResponseDto(
-                                                t.getId(),
-                                                t.getYoutubeId(),
-                                                t.getVideoGame().getId())))
-                                .collect(Collectors.toSet());
-
-                VideoGameResponseDto videoGameResponseDto =
-                        new VideoGameResponseDto(
-                                game.getId(),
-                                game.getName(),
-                                game.getGameDeveloper(),
-                                game.getGamePublisher(),
-                                game.getReleaseDate(),
-                                game.getGenre(),
-                                game.getRating(),
-                                game.getDescription(),
-                                photos,
-                                String.format("%.2f", game.getAverageScore()),
-                                scoreResponseDtos,
-                                reviewResponseDtos,
-                                trailerResponseDtos);
-
-                videGamesResponse.add(videoGameResponseDto);
-            }
-
-            if (videGamesResponse.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            PaginatedVideoGameResponseDto paginatedVideoGameResponseDto
-                    = new PaginatedVideoGameResponseDto(
-                    pageGames.getTotalElements(),
-                    pageGames.getTotalPages(),
-                    pageGames.getNumber(),
-                    videGamesResponse);
-
-            return new ResponseEntity<>(paginatedVideoGameResponseDto, HttpStatus.OK);
-
+            PaginatedVideoGameResponseDto response = videoGameService.getPaginatedGames(gameName, page, size, sort, userId);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
